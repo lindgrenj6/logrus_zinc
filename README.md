@@ -3,7 +3,8 @@
 This is a hook for use with the amazing [ZincSearch](https://zincsearch.com/) just in case anyone wanted to not have to run an entire elastic + kibana cluster locally.
 
 ### Adding to your Logrus logger
-All of the logic is contained in the `LocalZincHook` struct - so adding a call like this should be enough:
+1.  `go get github.com/lindgrenj6/logrus_zinc`
+2. All of the logic is contained in the `LocalZincHook` struct - so adding a call like this should be enough:
 ```go
 logger.AddHook(&LocalZincHook{
     URL: "http://localhost:4080,
@@ -13,7 +14,9 @@ logger.AddHook(&LocalZincHook{
 })
 ```
 
-After that just run the program like normal and your logs should be geting shipped to your local zinc instance. Sweet!
+_note: URL will default to localhost:4080 and index will default to...default. so they are not required_
+
+3. After that just run the program like normal and your logs should be geting shipped to your local zinc instance. Sweet!
 
 Just browse to http://localhost:4080 and you will see a lightweight verion of the Kibana UI we're all used to.
 

@@ -27,6 +27,9 @@ type LocalZincHook struct {
 }
 
 func (k *LocalZincHook) Fire(entry *logrus.Entry) error {
+	if k.URL == "" {
+		k.URL = "http://localhost:4080"
+	}
 	if k.Index == "" {
 		k.Index = "default"
 	}
