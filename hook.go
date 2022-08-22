@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/sirupsen/logrus"
@@ -70,4 +71,20 @@ func (k *LocalZincHook) Fire(entry *logrus.Entry) error {
 
 func (k *LocalZincHook) Levels() []logrus.Level {
 	return logrus.AllLevels
+}
+
+func FromEnv() (*LocalZincHook, error) {
+	if os.Getenv("ZINC_SEARCH_USERNAME") == "" {
+		return nil, fmt.Errorf("ZINC_SEARCH_USERNAME is required")
+	}
+	if os.Getenv("ZINC_SEARCH_PASSWORD") == "" {
+		return nil, fmt.Errorf("ZINC_SEARCH_PASSWORD is required")
+	}
+
+	return &LocalZincHook{
+		URL:      os.Getenv("ZINC_SEARCH_URL"),
+		Index:    os.Getenv("ZINC_SEARCH_INDEX"),
+		Username: os.Getenv("ZINC_SEARCH_USERNAME"),
+		Password: os.Getenv("ZINC_SEARCH_PASSWORD"),
+	}, nil
 }
